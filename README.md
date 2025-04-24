@@ -10,10 +10,9 @@
 - **UI Components**: Element Plus **（基于Vue 3的UI组件库）**
 - **Data Visualization**: ECharts **（百度开源图表库）**
 - **HTTP Client**: Axios **（Promise-based HTTP客户端）**
-- **Rich Text Editor**: (如使用请注明，例如WangEditor/Tiptap) **（富文本编辑器）**
+- **Rich Text Editor**: WangEditor **（富文本编辑器）**
 - **Other Libraries**: 
-  - VueUse **（Vue组合式API实用工具集）**
-  - Day.js **（轻量级日期处理库）**
+
 
 ## Backend Technology Stack **（后端技术栈）**
 
@@ -133,9 +132,9 @@ admin_background/
 │
 └── server/                  # 后端代码
     ├── config/              # 配置文件（数据库/JWT等）
-    ├── controllers/         # 业务逻辑控制器
+  
     ├── middleware/         # 中间件（认证/日志等）
-    ├── models/             # 数据模型（Sequelize/Mongoose等）
+
     ├── routes/             # 路由定义
     ├── utils/              # 工具类（加密/验证等）
     ├── app.js              # Express应用配置
