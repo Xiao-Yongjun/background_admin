@@ -6,7 +6,11 @@ import {
   HomeFilled,
   Setting,
   InfoFilled,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Sunny,
+  Moon,
+  Message,
+  Files, Goods
 } from '@element-plus/icons-vue'
 import { RouterView } from 'vue-router'
 import useUserStore from '../stores/user'
@@ -87,6 +91,13 @@ const menuData = computed(() => {
   }))
 })
 
+// 主题切换
+const isLightMode = ref(false)
+const toggleTheme = () => {
+  isLightMode.value = !isLightMode.value
+  document.body.classList.toggle('light-mode', isLightMode.value)
+}
+
 // 图标映射函数
 const getIcon = (name) => {
   switch (name) {
@@ -94,6 +105,12 @@ const getIcon = (name) => {
       return InfoFilled
     case '系统设置':
       return Setting
+    case '公告':
+      return Message
+    case '可视化':
+      return Files
+    case '商品':
+      return Goods
     default:
       return HomeFilled
   }
@@ -144,9 +161,7 @@ onMounted(() => {
               <span class="nickname">{{ item.category_nickname }}</span>
             </template>
             <el-menu-item v-for="child in item.children" :key="child.id" :index="child.path">
-              <el-icon>
-                <component :is="child.icon" />
-              </el-icon>
+
               {{ child.nickname }}
             </el-menu-item>
           </el-sub-menu>
@@ -163,6 +178,20 @@ onMounted(() => {
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>{{ currentRouteName }}</el-breadcrumb-item>
           </el-breadcrumb>
+        </div>
+        <div class="header-center">
+          <div @click="toggleTheme" class="theme-switch">
+            <div class="switch-track" :class="{ 'light-mode': isLightMode }">
+              <div class="switch-thumb">
+                <el-icon v-if="isLightMode">
+                  <Sunny />
+                </el-icon>
+                <el-icon v-else>
+                  <Moon />
+                </el-icon>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="header-right">
           <el-dropdown>
@@ -193,112 +222,251 @@ onMounted(() => {
 <style scoped lang="scss">
 .layout-container {
   height: 100vh;
-  background-color: #121212;
-  /* 深黑色背景 */
-  color: #00ffea;
-  /* 科技感的青色文字 */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--transition-all);
 }
 
 .sidebar {
-  background-color: #1e1e1e;
-  /* 侧边栏深灰色背景 */
-  color: #00ffea;
+  background-color: var(--block-bg);
+  color: var(--text-color);
   transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-  /* 侧边栏光影效果 */
+  box-shadow: var(--shadow-md);
 }
 
 .logo {
   height: 60px;
   line-height: 60px;
   text-align: center;
-  font-size: 18px;
+  font-size: var(--text-md);
   font-weight: bold;
-  background-color: #2b2f3a;
+  background-color: var(--block-bg);
   cursor: pointer;
-  color: #00ffea;
-  text-shadow: 0 0 10px rgba(0, 255, 234, 0.7);
-  /* 文字光影效果 */
+  color: var(--primary);
+  text-shadow: 0 0 5px var(--glow-color);
+  transition: var(--transition-all);
 }
 
 .menu {
   border-right: none;
-  background-color: #1e1e1e;
-  /* 与侧边栏背景颜色一致 */
-  color: #00ffea;
-  /* 与整体文字颜色一致 */
-  span{
-    color: #00ffea;
+  background-color: var(--block-bg);
+  color: var(--text-color);
+  transition: var(--transition-all);
+
+  span {
+    color: var(--text-color);
   }
 }
 
-
 .el-menu-item.is-active {
-  background-color: rgba(0, 255, 234, 0.1);
-  /* 激活菜单项背景颜色与原设计协调 */
-  color: #00ffea;
-  /* 激活菜单项文字颜色与整体一致 */
+  background-color: rgba(129, 230, 217, 0.1);
+  color: var(--primary);
 }
-.el-menu-item{
-  background-color: rgba(0, 255, 234, 0.5);
+
+.el-menu-item {
+  background-color: rgba(129, 230, 217, 0.05);
+  transition: var(--transition-all);
 }
 
 .el-menu-item:hover {
-  background-color: rgba(0, 255, 234, 0.2);
-  /* 菜单项悬停背景颜色稍深 */
-  color: #00ffea;
-  /* 菜单项悬停文字颜色与整体一致 */
+  background-color: rgba(129, 230, 217, 0.2);
+  color: var(--primary);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1e1e1e;
-  /* 顶部导航栏深灰色背景 */
-  border-bottom: 1px solid #00ffea;
-  /* 底部边框颜色 */
-  padding: 0 20px;
-  box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-  /* 顶部导航栏光影效果 */
+  background-color: var(--block-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-all);
+}
+
+.header-left {
+  flex: 1;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .header-left .el-breadcrumb {
   line-height: 60px;
-}
 
-.header-right {
-  display: flex;
-  align-items: center;
+  :deep(.el-breadcrumb__inner) {
+    color: var(--text-color);
+    transition: var(--transition-all);
+  }
+
+  :deep(.el-breadcrumb__separator) {
+    color: var(--label-color);
+  }
 }
 
 .username {
-  margin-left: 10px;
+  margin-left: var(--space-sm);
+  color: var(--text-color);
 }
 
 .main-content {
-  background-color: #121212;
-  padding: 20px;
-  box-shadow: inset 0 0 10px rgba(0, 255, 234, 0.3);
-  /* 内容区光影效果 */
+  background-color: var(--bg-color);
+  padding: var(--space-lg);
+  transition: var(--transition-all);
 }
 
 .el-dropdown-menu {
-  background-color: #1e1e1e;
-  /* 下拉菜单背景 */
-  border: 1px solid #00ffea;
-  /* 下拉菜单边框 */
-  box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-  /* 下拉菜单光影效果 */
+  background-color: var(--block-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+
+  :deep(.el-dropdown-menu__item) {
+    color: var(--text-color);
+    transition: var(--transition-all);
+
+    &:hover {
+      background-color: rgba(129, 230, 217, 0.1);
+      color: var(--primary);
+    }
+  }
 }
 
-.el-dropdown-item {
-  color: #00ffea;
-  /* 下拉菜单项文字颜色 */
+.theme-switch {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+
+  .switch-track {
+    width: 80px;
+    /* 加宽轨道 */
+    height: 34px;
+    /* 增加高度 */
+    border-radius: 17px;
+    /* 匹配新高度 */
+    background-color: var(--bg-color-secondary);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.1),
+      0 0 0 0 rgba(var(--primary-rgb), 0);
+
+    &.light-mode {
+      background-color: #f0f0f0;
+    }
+
+    .switch-thumb {
+      position: absolute;
+      width: 30px;
+      /* 增大圆形按钮 */
+      height: 30px;
+      /* 增大圆形按钮 */
+      border-radius: 50%;
+      background-color: var(--primary);
+      top: 1px;
+      left: 1px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 10px rgba(var(--primary-rgb), 0);
+
+      .el-icon {
+        font-size: 16px;
+        /* 增大图标 */
+        transition: transform 0.3s ease;
+      }
+    }
+
+    &.light-mode .switch-thumb {
+      left: calc(100% - 31px);
+      /* 调整位置 */
+      background-color: #ffc107;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 10px rgba(255, 193, 7, 0);
+    }
+  }
+
+  &:hover .switch-track {
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.2),
+      0 0 8px rgba(var(--primary-rgb), 0.2);
+
+    .switch-thumb {
+      transform: scale(1.05);
+    }
+
+    &.light-mode {
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 8px rgba(255, 193, 7, 0.3);
+    }
+  }
+
+  &:active .switch-thumb {
+    width: 32px;
+  }
+
+  &:active .switch-track {
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.2),
+      0 0 15px rgba(var(--primary-rgb), 0.4);
+
+    &.light-mode {
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 15px rgba(255, 193, 7, 0.5);
+    }
+
+    .switch-thumb {
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 15px rgba(var(--primary-rgb), 0.6);
+
+      .el-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    &.light-mode .switch-thumb {
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 0 15px rgba(255, 193, 7, 0.7);
+    }
+  }
 }
 
-.el-dropdown-item:hover {
-  background-color: rgba(0, 255, 234, 0.1);
-  /* 下拉菜单项悬停背景 */
+.el-dropdown-link {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  transition: var(--transition-all);
+
+  &:hover {
+    color: var(--primary);
+  }
 }
 </style>

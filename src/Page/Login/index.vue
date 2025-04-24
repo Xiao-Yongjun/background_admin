@@ -9,12 +9,14 @@
         <div v-if="activeTab === 0">
           <div class="password-login">
             <h1>手机号登录</h1>
-            <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" label-width="auto">
+            <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" label-width="auto"
+              @keyup.enter="handleSubmit">
               <el-form-item label="手机号" prop="phone">
                 <el-input v-model="loginForm.phone" placeholder="请输入手机号" />
               </el-form-item>
               <el-form-item label="密码" prop="password">
-                <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" />
+                <el-input v-model="loginForm.password" type="password" placeholder="请输入密码"
+                  @keyup.enter="handleSubmit" />
               </el-form-item>
               <el-form-item>
                 <el-button :loading="isLoading" type="primary" round class="submit-button" @click="handleSubmit">
@@ -52,7 +54,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import useUserLoginStore from '../../stores/user'
@@ -102,6 +104,23 @@ const loginRules = reactive({
   password: [{ required: true, trigger: 'blur', validator: validatePassword }],
 })
 
+// 全局键盘事件处理
+const handleKeyDown = (event) => {
+  if (event.key === 'Enter' && activeTab.value === 0) {
+    handleSubmit()
+  }
+}
+
+// 添加全局键盘事件监听
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+// 移除全局键盘事件监听
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
+
 // 切换登录方式
 const switchLoginMethod = (method) => {
   activeTab.value = method
@@ -145,6 +164,7 @@ const handleReset = () => {
   loginFormRef.value.resetFields()
 }
 </script>
+
 
 <style scoped lang="scss">
 .login-container {

@@ -1,0 +1,155 @@
+/* 全局CSS变量 */
+:root {
+  /* 颜色变量 - 暗色模式 */
+  --dark-bg-color: #0f131a;
+  --dark-block-bg: #181f2a;
+  --dark-border-color: #181f2a;
+  --dark-text-color: #d1d8e2;
+  --dark-label-color: #8b98a8;
+  --dark-input-bg: #181f2a;
+  --dark-input-border: #2c3440;
+  --dark-disabled-bg: #2c3440;
+  --dark-disabled-text: #8b98a8;
+
+  /* 颜色变量 - 亮色模式 */
+  --light-bg-color: #f7fafc;
+  --light-block-bg: #edf2f7;
+  --light-border-color: #e2e8f0;
+  --light-text-color: #2d3748;
+  --light-label-color: #4a5568;
+  --light-input-bg: white;
+  --light-input-border: #cbd5e0;
+  --light-disabled-bg: #e2e8f0;
+  --light-disabled-text: #718096;
+
+  /* 主题色 */
+  --primary-color: #81e6d9;
+  --primary-light-color: #4299e1;
+  --success-color: #48bb78;
+  --danger-color: #f56565;
+
+  /* 发光效果 */
+  --glow-color-dark: rgba(129, 230, 217, 0.6);
+  --glow-color-light: rgba(66, 153, 225, 0.6);
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* 过渡效果 */
+  --transition-all: all 0.3s ease;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 5px;
+  --radius-lg: 10px;
+  --radius-full: 50%;
+
+  /* 间距 */
+  --space-sm: 10px;
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 30px;
+  --space-xxl: 40px;
+
+  /* 字体大小 */
+  --text-sm: 0.9rem;
+  --text-md: 1rem;
+  --text-lg: 1.75rem;
+}
+
+/* 暗色模式默认变量 */
+body {
+  --bg-color: var(--dark-bg-color);
+  --block-bg: var(--dark-block-bg);
+  --border-color: var(--dark-border-color);
+  --text-color: var(--dark-text-color);
+  --label-color: var(--dark-label-color);
+  --input-bg: var(--dark-input-bg);
+  --input-border: var(--dark-input-border);
+  --disabled-bg: var(--dark-disabled-bg);
+  --disabled-text: var(--dark-disabled-text);
+  --primary: var(--primary-color);
+  --glow-color: var(--glow-color-dark);
+}
+
+/* 亮色模式变量覆盖 */
+body.light-mode {
+  --bg-color: var(--light-bg-color);
+  --block-bg: var(--light-block-bg);
+  --border-color: var(--light-border-color);
+  --text-color: var(--light-text-color);
+  --label-color: var(--light-label-color);
+  --input-bg: var(--light-input-bg);
+  --input-border: var(--light-input-border);
+  --disabled-bg: var(--light-disabled-bg);
+  --disabled-text: var(--light-disabled-text);
+  --primary: var(--primary-light-color);
+  --glow-color: var(--glow-color-light);
+}
+
+/* 全局动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  from {
+    text-shadow:
+      0 0 5px var(--glow-color),
+      0 0 10px rgba(129, 230, 217, 0.3),
+      0 0 15px rgba(129, 230, 217, 0.2);
+  }
+  to {
+    text-shadow:
+      0 0 10px var(--glow-color),
+      0 0 20px rgba(129, 230, 217, 0.6),
+      0 0 30px rgba(129, 230, 217, 0.4);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(129, 230, 217, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(129, 230, 217, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(129, 230, 217, 0);
+  }
+}
+
+.animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+.zoomIn {
+  animation-name: zoomIn;
+}
+.glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+.pulse {
+  animation: pulse 2s infinite;
+}

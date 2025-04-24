@@ -5,8 +5,10 @@ import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import './style/main.css'
 const pinia = createPinia()
 const app = createApp(App)
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // main.ts
 
 // 如果您正在使用CDN引入，请删除下面一行。

@@ -311,32 +311,33 @@ onMounted(() => {
 /* 全局样式 */
 .container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
 }
 
 .left-panel {
   flex: 1;
   min-width: 250px;
-  background-color: #2c2b2b;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  span{
-    color: #ce1e73;
+  background-color: var(--block-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+
+  span {
+    color: var(--primary);
   }
 }
 
 .right-panel {
   flex: 3;
-  background-color: #645e5e;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--block-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .add-button {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-lg);
 }
 
 .el-menu-vertical-demo {
@@ -348,109 +349,114 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: var(--space-sm) var(--space-md);
   height: auto;
   line-height: normal;
-  font-size: 14px;
-  color: #303133;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  font-size: var(--text-md);
+  color: var(--text-color);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-all);
 }
 
 .el-menu-item:hover {
-  background-color: #ecf5ff;
+  background-color: rgba(var(--primary), 0.1);
 }
 
 .el-menu-item .action-buttons {
   display: flex;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 
 .el-table {
-  margin-top: 20px;
+  margin-top: var(--space-lg);
 }
 
 .el-table .el-tag {
-  margin-right: 5px;
+  margin-right: var(--space-sm);
 }
 
 .el-dialog {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .el-dialog__header {
-  border-bottom: 1px solid #ebeef5;
-  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-lg);
   font-weight: bold;
+  color: var(--text-color);
 }
 
 .el-dialog__body {
-  padding: 20px;
+  padding: var(--space-lg);
 }
 
 .el-dialog__footer {
-  border-top: 1px solid #ebeef5;
-  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-lg);
   text-align: right;
 }
 
 .el-form-item {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-lg);
 }
 
 .el-form-item__label {
   font-weight: bold;
+  color: var(--label-color);
 }
 
 .el-input,
 .el-select {
   width: 100%;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
 }
 
 .el-button {
-  margin-right: 10px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  margin-right: var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-all);
 }
 
 .el-button--primary {
-  background-color: #409eff;
-  border-color: #409eff;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .el-button--primary:hover {
-  background-color: #66b1ff;
-  border-color: #66b1ff;
+  background-color: rgba(var(--primary), 0.8);
+  border-color: rgba(var(--primary), 0.8);
 }
 
 .el-button--text {
-  color: #409eff;
+  color: var(--primary);
 }
 
 .el-button--text:hover {
-  color: #66b1ff;
+  color: rgba(var(--primary), 0.8);
 }
 
 .el-tag {
-  margin-right: 5px;
+  margin-right: var(--space-sm);
 }
 
 .el-tag--success {
-  background-color: #4fdc02;
-  border-color: #e1f3d8;
-  color: #67c23a;
+  background-color: var(--success-color);
+  border-color: rgba(var(--success-color), 0.2);
+  color: white;
 }
 
 .el-tag--warning {
-  background-color: #fdf6ec;
-  border-color: #faecd8;
-  color: #e6a23c;
+  background-color: rgba(var(--danger-color), 0.1);
+  border-color: rgba(var(--danger-color), 0.2);
+  color: var(--danger-color);
 }
 
 .el-tag--danger {
-  background-color: #fef0f0;
-  border-color: #fde2e2;
-  color: #f56c6c;
+  background-color: rgba(var(--danger-color), 0.1);
+  border-color: rgba(var(--danger-color), 0.2);
+  color: var(--danger-color);
 }
 </style>

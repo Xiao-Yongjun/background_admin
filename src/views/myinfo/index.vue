@@ -1,6 +1,9 @@
 <template>
-  <div class="user-info-container">
-    <h1 class="title">我的信息</h1>
+  <div class="user-info-container ">
+    <div class="theme-toggle">
+
+    </div>
+    <h1 class="title glow">我的信息</h1>
     <div class="info-section" v-if="!isEditing">
       <div class="info-block animated fadeIn">
         <div class="info-row">
@@ -9,13 +12,13 @@
         </div>
         <div class="info-row">
           <label>头像:</label>
-          <img :src="user.user_pic" alt="用户头像" @click="startEditing">
+          <img :src="user.user_pic" alt="用户头像" @click="startEditing" class="glow-hover">
         </div>
         <div class="info-row">
           <label>角色身份:</label>
           <span @click="startEditing">{{ user.status === 0 ? '游客' : user.status === 1 ? '普通用户' : '超级管理员' }}</span>
         </div>
-        <button class="edit-button" @click="startEditing">修改信息</button>
+        <button class="edit-button pulse" @click="startEditing">修改信息</button>
       </div>
     </div>
     <div class="info-section" v-else>
@@ -27,7 +30,7 @@
           </div>
           <div class="info-row">
             <label>头像:</label>
-            <el-upload class="avatar-uploader" :show-file-list="false" :before-upload="beforeAvatarUpload">
+            <el-upload class="avatar-uploader glow-hover" :show-file-list="false" :before-upload="beforeAvatarUpload">
               <img v-if="imageUrl" :src="imageUrl" class="avatar" />
               <el-icon v-else class="avatar-uploader-icon">
                 <Plus />
@@ -36,7 +39,7 @@
           </div>
           <div class="info-row">
             <label>角色身份:</label>
-            <select v-model="user.status">
+            <select v-model="user.status" class="glow-focus">
               <option value="0">游客</option>
               <option value="1">普通用户</option>
               <option value="2">超级管理员</option>
@@ -44,21 +47,21 @@
           </div>
           <div class="info-row">
             <label>旧密码:</label>
-            <input v-model="oldPwd" :type="showOldPwd ? 'text' : 'password'">
-            <button type="button" @click="toggleShowOldPwd">
+            <input v-model="oldPwd" :type="showOldPwd ? 'text' : 'password'" class="glow-focus">
+            <button type="button" @click="toggleShowOldPwd" class="glow-hover">
               {{ showOldPwd ? '隐藏' : '显示' }}
             </button>
           </div>
           <div class="info-row">
             <label>新密码:</label>
-            <input v-model="newPwd" :type="showNewPwd ? 'text' : 'password'">
-            <button type="button" @click="toggleShowNewPwd">
+            <input v-model="newPwd" :type="showNewPwd ? 'text' : 'password'" class="glow-focus">
+            <button type="button" @click="toggleShowNewPwd" class="glow-hover">
               {{ showNewPwd ? '隐藏' : '显示' }}
             </button>
           </div>
           <div class="button-group">
-            <button type="submit" class="save-button">保存修改</button>
-            <button type="button" @click="cancelEditing" class="cancel-button">取消修改</button>
+            <button type="submit" class="save-button glow-button">保存修改</button>
+            <button type="button" @click="cancelEditing" class="cancel-button glow-button">取消修改</button>
           </div>
         </form>
       </div>
@@ -89,11 +92,18 @@ const oldPwd = ref('');
 const newPwd = ref('');
 const showOldPwd = ref(false);
 const showNewPwd = ref(false);
+const isLightMode = ref(false);
 
 onMounted(() => {
   imageUrl.value = user.value.user_pic;
-  getuserinfo()
+  getuserinfo();
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    isLightMode.value = savedTheme === 'light';
+  }
 });
+
+
 
 const startEditing = () => {
   isEditing.value = true;
@@ -160,7 +170,7 @@ const saveChanges = async () => {
       userStore.setUser(user.value);
       cancelEditing();
     } else {
-      ElMessage.error('用户信息更新失败！');
+      Emessage.error('用户信息更新失败！');
     }
   } catch (error) {
     ElMessage.error('请求出错：' + error.message);
@@ -169,132 +179,124 @@ const saveChanges = async () => {
 </script>
 
 <style scoped>
-body {
-  background-color: #0a192f;
-  font-family: 'Roboto', sans-serif;
-  color: #ccd6f6;
-}
-
 .user-info-container {
-  padding: 40px;
-  border: 1px solid #112240;
-  border-radius: 10px;
+  padding: var(--space-xxl);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   width: 80%;
   max-width: 600px;
-  margin: 20px auto;
-  background-color: #112240;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: var(--space-lg) auto;
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-all);
+  position: relative;
 }
 
 .title {
   text-align: center;
-  color: #64ffda;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+  color: var(--primary);
+  margin-bottom: var(--space-xl);
+  font-size: var(--text-lg);
+  font-weight: 600;
 }
 
 .info-section {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-lg);
 }
 
 .info-block {
-  padding: 20px;
-  border: 1px solid #233554;
-  border-radius: 10px;
-  background-color: #0a192f;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background-color: var(--block-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .info-row {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 15px;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .info-row label {
   width: 120px;
-  font-weight: bold;
-  color: #8892b0;
+  font-weight: 500;
+  color: var(--label-color);
+}
+
+.info-row span {
+  color: var(--text-color);
+  flex: 1;
+  padding: var(--space-sm) 0;
 }
 
 .info-row input,
 .info-row select {
-  padding: 10px;
-  border: 1px solid #233554;
-  border-radius: 5px;
+  padding: var(--space-sm);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
   flex: 1;
-  background-color: #0a192f;
-  color: #ccd6f6;
-  transition: all 0.3s ease;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: var(--transition-all);
 }
 
-.info-row input:focus,
-.info-row select:focus {
-  border-color: #64ffda;
-  outline: none;
-  transform: scale(1.02);
+.info-row input:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
 }
 
 .info-row img {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #64ffda;
-  box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
-  transition: transform 0.3s ease;
-}
-
-.info-row img:hover {
-  transform: scale(1.1);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--primary);
+  transition: var(--transition-all);
+  cursor: pointer;
 }
 
 .edit-button,
 .save-button,
 .cancel-button {
-  padding: 10px 20px;
+  padding: var(--space-sm) var(--space-lg);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-all);
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .edit-button {
-  background-color: #64ffda;
-  color: #0a192f;
-  align-self: center;
+  background-color: var(--primary);
+  color: var(--dark-bg-color);
+  display: block;
+  margin: var(--space-lg) auto 0;
 }
 
 .save-button {
-  background-color: #28a745;
+  background-color: var(--success-color);
   color: white;
 }
 
 .cancel-button {
-  background-color: #dc3545;
+  background-color: var(--danger-color);
   color: white;
-}
-
-.edit-button:hover,
-.save-button:hover,
-.cancel-button:hover {
-  filter: brightness(120%);
-  transform: scale(1.05);
 }
 
 .button-group {
   display: flex;
-  gap: 20px;
+  gap: var(--space-lg);
   justify-content: center;
-  margin-top: 20px;
+  margin-top: var(--space-lg);
 }
 
 .avatar-uploader .el-upload {
-  border: 1px dashed #64ffda;
-  border-radius: 50%;
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-full);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -303,52 +305,128 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease;
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: #64ffda;
-  box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
-  transform: scale(1.1);
+  transition: var(--transition-all);
+  background-color: rgba(129, 230, 217, 0.1);
 }
 
 .avatar-uploader-icon {
   font-size: 28px;
-  color: #64ffda;
+  color: var(--primary);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 密码显示/隐藏按钮样式 */
+.info-row button[type="button"] {
+  padding: 8px 12px;
+  background-color: var(--input-border);
+  color: var(--text-color);
+  border: none;
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-sm);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* 悬停发光效果 */
+.glow-hover:hover {
+  box-shadow: 0 0 15px var(--glow-color),
+    0 0 25px rgba(129, 230, 217, 0.4),
+    0 0 35px rgba(129, 230, 217, 0.2);
+  transform: scale(1.05);
+}
+
+/* 聚焦发光效果 */
+.glow-focus:focus {
+  box-shadow: 0 0 8px var(--glow-color);
+  outline: none;
+}
+
+/* 按钮发光效果 */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0) 55%);
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.glow-button:hover::after {
+  opacity: 0.6;
+  left: 100%;
+  top: 100%;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+}
+
+.theme-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--block-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-size: var(--text-sm);
+}
+
+.theme-button:hover {
+  transform: scale(1.05);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .user-info-container {
+    width: 95%;
+    padding: var(--space-lg);
   }
 
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes zoomIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
+  .theme-toggle {
+    position: static;
+    margin-bottom: var(--space-md);
+    display: flex;
+    justify-content: flex-end;
   }
 
-  to {
-    transform: scale(1);
-    opacity: 1;
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
   }
-}
 
-.animated {
-  animation-duration: 0.5s;
-  animation-fill-mode: both;
-}
+  .info-row label {
+    width: 100%;
+  }
 
-.fadeIn {
-  animation-name: fadeIn;
-}
+  .button-group {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
 
-.zoomIn {
-  animation-name: zoomIn;
+  .glow {
+    animation: glow 3s ease-in-out infinite alternate;
+  }
 }
 </style>
