@@ -52,3 +52,91 @@ pnpm install   # 安装依赖
 pnpm dev       # 开发模式
 pnpm build     # 生产环境构建
 pnpm lint      # 代码质量检查
+
+Backend （后端）
+sh
+复制
+下载
+cd server
+npm install    # 安装依赖
+npm start      # 生产模式启动
+npm run dev    # 开发模式（使用nodemon热更新）
+Environment Configuration （环境配置）
+前端 (.env)
+
+复制
+下载
+VITE_API_BASE_URL=http://localhost:3000/api  # 后端API基础地址
+VITE_APP_TITLE=Admin Dashboard               # 应用标题
+后端 (.env)
+
+复制
+下载
+PORT=3000                   # 服务端口
+DB_HOST=localhost           # 数据库地址
+DB_USER=root                # 数据库用户名
+DB_PASSWORD=                # 数据库密码
+DB_NAME=admin_db            # 数据库名称
+JWT_SECRET=your_secure_secret  # JWT加密密钥
+JWT_EXPIRES_IN=24h         # Token有效期
+Development Notes （开发说明）
+Technical Challenges Solved （已解决的技术难点）
+Permission Management （权限管理）
+
+实现基于用户角色的动态路由加载
+
+组件级别的权限控制指令
+
+Token Authentication （令牌认证）
+
+Token自动刷新机制
+
+Axios拦截器实现自动化Token管理
+
+Data Visualization （数据可视化）
+
+ECharts实现的实时数据看板
+
+响应式图表组件
+
+Rich Text Integration （富文本集成）
+
+自定义图片上传处理
+
+HTML内容的XSS防护
+
+Backend Security （后端安全）
+
+SQL注入防护
+
+敏感接口的请求限流
+
+Directory Structure （目录结构）
+复制
+下载
+admin_background/
+├── client/                  # 前端代码
+│   ├── public/              # 静态资源
+│   ├── src/
+│   │   ├── api/             # API服务封装
+│   │   ├── assets/          # 静态资源（图片/字体等）
+│   │   ├── components/      # 可复用组件
+│   │   ├── composables/     # Composition API逻辑抽离
+│   │   ├── router/         # 路由配置（含权限路由）
+│   │   ├── stores/          # Pinia状态管理
+│   │   ├── styles/          # 全局样式
+│   │   ├── utils/           # 工具函数
+│   │   ├── views/           # 页面组件
+│   │   ├── App.vue          # 根组件
+│   │   └── main.js          # 应用入口
+│   └── vite.config.js       # Vite配置
+│
+└── server/                  # 后端代码
+    ├── config/              # 配置文件（数据库/JWT等）
+    ├── controllers/         # 业务逻辑控制器
+    ├── middleware/         # 中间件（认证/日志等）
+    ├── models/             # 数据模型（Sequelize/Mongoose等）
+    ├── routes/             # 路由定义
+    ├── utils/              # 工具类（加密/验证等）
+    ├── app.js              # Express应用配置
+    └── server.js           # 服务启动入口
