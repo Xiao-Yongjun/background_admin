@@ -33,3 +33,5 @@ pnpm build
 ```sh
 pnpm lint
 ```
+这是一个前后端的通用后台管理项目
+
